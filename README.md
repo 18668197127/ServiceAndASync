@@ -1,0 +1,2 @@
+# ServiceAndASync
+这个是一个断点续传下载的Demo,还有子线程之间异步消息处理机制的Demo,还有Service启动,绑定的Demo
