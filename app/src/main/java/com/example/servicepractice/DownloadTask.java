@@ -32,7 +32,6 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer>{
     //初始化对象
     private DownloadListener listener;
     private Context context;
-
     private boolean isCanceled=false;
     private boolean isPaused=false;
     private int lastProgress=0;
@@ -49,14 +48,10 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer>{
         try {
             long downloadedLength = 0;//已下载长度
             String downloadUrl = params[0];
-//            String fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/"));
-            String fileName ="/abc.jpg";
-//            String directory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+            String fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/"));
             String directory= Environment.getExternalStorageDirectory().getPath();
-//            String directory= Environment.getExternalStorageDirectory().getPath()+"/DCIM";
-            Log.i(TAG, "doInBackground: "+directory+" "+fileName);
 //            String directory = Environment.getDataDirectory() .getPath();
-
+            Log.i(TAG, "doInBackground: "+directory+" "+fileName);
             file = new File(directory + fileName);
             if (file.exists()) {
                 downloadedLength = file.length();
@@ -97,6 +92,7 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer>{
 //                Uri uri = Uri.fromFile(file);
 //                intent.setData(uri);
 //                context.sendBroadcast(intent);
+                //下载完成调用系统文件扫描机制,否则电脑连接显示不了文件
                 MediaScannerConnection.scanFile(context, new String[] { file.getAbsolutePath() }, null, null);
                 return TYPE_SUCCESS;
             }

@@ -51,6 +51,8 @@ public class DownloadService extends Service {
 
         @Override
         public void onPaused() {
+            //这里是个问题点,我觉得不能=null
+            // 重新点击start需要null
             downloadTask = null;
             Toast.makeText(DownloadService.this, "Paused", Toast.LENGTH_SHORT).show();
         }
@@ -78,6 +80,9 @@ public class DownloadService extends Service {
         }
 
         public void pauseDownload() {
+
+            //这里又有问题了,只有暂停没有恢复开始吗?
+            // 恢复开始要点开始按钮
             if (downloadTask != null) {
                 downloadTask.pauseDownload();
             }
@@ -89,7 +94,6 @@ public class DownloadService extends Service {
             }
             if (downloadUrl != null) {
                 String fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/"));
-//                String directory= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
                 String directory = Environment.getExternalStorageDirectory().getPath();
                 File file = new File(directory + fileName);
                 if (file.exists()) {
@@ -125,8 +129,12 @@ public class DownloadService extends Service {
             //通知才能正常弹出
             getNotificationManager().createNotificationChannel(notificationChannel);
         }
-
-        Notification.Builder builder = new Notification.Builder(this, CHANNEL_ID);
+        Notification.Builder builder;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, CHANNEL_ID);
+        }else {
+            builder = new Notification.Builder(this);
+        }
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         builder.setContentIntent(pi);

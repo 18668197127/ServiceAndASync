@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                String url="https://raw.githubusercontent.com/guolindev/eclipse/master/eclipse-inst-win64.exe";
 //                String url="https://qd.myapp.com/myapp/qqteam/AndroidQQ/mobileqq_android.apk";
-                String url="http://f.hiphotos.baidu.com/image/pic/item/b7fd5266d016092446517fdadd0735fae7cd34ff.jpg";
-
+//                String url="http://f.hiphotos.baidu.com/image/pic/item/b7fd5266d016092446517fdadd0735fae7cd34ff.jpg";
+                String url="https://qd.myapp.com/myapp/qqteam/AndroidQQ/mobileqq_android.apk";
                 downloadBinder.startDownload(url);
             }
         });
@@ -67,24 +67,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //启动服务
+        //绑定启动服务
         Intent intent=new Intent(this,DownloadService.class);
-        startService(intent);
-        //绑定服务
         bindService(intent,connection,BIND_AUTO_CREATE);
 
         //申请写入权限
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
-        Log.i(TAG, "onCreate: "+Environment.getDataDirectory().getAbsolutePath());
-        Log.i(TAG, "onCreate: "+Environment.getRootDirectory().getAbsolutePath());
-        Log.i(TAG, "onCreate: "+Environment.getDownloadCacheDirectory().getAbsolutePath());
-        Log.i(TAG, "onCreate: "+Environment.getExternalStorageDirectory().getAbsolutePath());
-        Log.i(TAG, "onCreate: "+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath());
-        Log.i(TAG, "onCreate: "+this.getFileStreamPath("custom1").getAbsolutePath());
-        Log.i(TAG, "onCreate: "+this.getDir("custom2", Context.MODE_PRIVATE).getAbsolutePath());
-        Log.i(TAG, "onCreate: "+this.getObbDir().getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+Environment.getDataDirectory().getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+Environment.getRootDirectory().getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+Environment.getDownloadCacheDirectory().getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+Environment.getExternalStorageDirectory().getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+this.getFileStreamPath("custom1").getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+this.getDir("custom2", Context.MODE_PRIVATE).getAbsolutePath());
+//        Log.i(TAG, "onCreate: "+this.getObbDir().getAbsolutePath());
 
     }
 
@@ -104,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-
         //断开服务的绑定
         unbindService(connection);
     }
